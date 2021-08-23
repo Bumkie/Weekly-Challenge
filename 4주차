@@ -1,0 +1,34 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String[] table, String[] languages, int[] preference) {
+        ArrayList<String> table_lang = new ArrayList<>(); //stringtoken 담기
+        ArrayList<String> job = new ArrayList<>();
+        String answer = "";
+        int max = 0; //점수 총합 비교를 위한 max 값 초기화
+        int score = 0;
+        for(int i = 0; i < table.length; i++){
+            table_lang.clear();
+            StringTokenizer st = new StringTokenizer(table[i]);
+            job.add(st.nextToken()); //직업
+            while(st.hasMoreTokens())
+                table_lang.add(st.nextToken());
+            for(int j = 0; j < languages.length; j++){
+                if(table_lang.contains(languages[j]))
+                    score += preference[j] * (5 - table_lang.indexOf(languages[j]));
+            }
+            if(max < score){
+                max = score;
+                answer = job.get(i);
+            }
+            else if (max == score){
+                if(answer.compareTo(job.get(i)) > 0)
+                    answer = job.get(i);
+            }
+            score = 0;
+        }
+        
+        
+        return answer;
+    }
+}
